@@ -1,0 +1,37 @@
+<resources>
+
+    <string name="title_activity_settings">Settings</string>
+
+    <!-- Example General settings -->
+    <string name="pref_header_general">General</string>
+    <string name="pref_header_notifications">Notifications</string>
+    <string name="pref_title_morse_notify">Play SMS as morse</string>
+    <string name="pref_description_morse_notify">Whenever you receive an SMS, it will be played back in Morse code</string>
+    <string name="pref_title_tone_frequency">Morse Code Tone Frequency</string>
+    <string name="pref_description_tone_frequency">The frequency of the sound used to play the Morse code</string>
+    <string name="pref_title_morse_speed">Morse Code Speed</string>
+    <string name="pref_message_length">Number of characters to play</string>
+    <string name="pref_use_sender_last">Play sender phone number</string>
+
+    <string-array name="pref_speed_list_titles">
+        <item>Fast</item>
+        <item>Medium</item>
+        <item>Slow</item>
+    </string-array>
+    <string-array name="pref_speed_list_values">
+        <item>600</item>
+        <item>800</item>
+        <item>1000</item>
+    </string-array>
+    
+     <string-array name="pref_frequency_list_titles">
+        <item>High</item>
+        <item>Medium</item>
+        <item>Low</item>
+    </string-array>
+    <string-array name="pref_frequency_list_values">
+        <item>1000</item>
+        <item>800</item>
+        <item>600</item>
+    </string-array>
+</resources>

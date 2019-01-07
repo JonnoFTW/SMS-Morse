@@ -1,0 +1,28 @@
+<PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <!--
+         A 'parent' preference, which enables/disables child preferences (below)
+         when checked/unchecked.
+
+    -->
+    <CheckBoxPreference
+        android:defaultValue="true"
+        android:key="play_on_sms"
+        android:title="@string/pref_title_morse_notify" />
+    <CheckBoxPreference
+        android:defaultValue="false"
+        android:key="play_sender"
+        android:title="@string/pref_use_sender_last" />
+    <com.jonathanmackenzie.sms_morse.NumberPickerPreference
+        android:defaultValue="4"
+        android:key="play_length"
+        android:title="@string/pref_message_length" />
+    <MultiSelectListPreference
+        android:defaultValue="@array/empty_array"
+        android:dialogTitle="Other Apps"
+        android:entries="@array/other_app_titles"
+        android:entryValues="@array/other_app_values"
+        android:key="other_apps"
+        android:summary="Morse Codify Notifications for these apps"
+        android:title="@string/other_apps_title" />
+</PreferenceScreen>

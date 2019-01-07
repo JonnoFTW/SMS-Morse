@@ -1,0 +1,28 @@
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    tools:context="com.jonathanmackenzie.sms_morse.MainActivity">
+    <item
+        android:id="@+id/action_application_info"
+        android:title="@string/action_application_info"
+        app:showAsAction="never" />
+
+    <item
+        android:id="@+id/action_notification_settings"
+        android:title="@string/notification_settings"
+        app:showAsAction="never" />
+
+    <item
+        android:id="@+id/action_reference"
+        android:icon="@drawable/ic_reference"
+        android:orderInCategory="99"
+        android:title="@string/reference_title"
+        app:showAsAction="always" />
+    <item
+        android:id="@+id/action_settings"
+        android:icon="@drawable/ic_menu_preferences"
+        android:orderInCategory="100"
+        android:title="@string/action_settings"
+        app:showAsAction="ifRoom" />
+
+</menu>

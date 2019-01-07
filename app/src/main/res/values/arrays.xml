@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string-array name="other_app_values">
+        <item>com.facebook.orca</item>
+        <item>com.google.android.apps.messaging</item>
+        <item>com.whatsapp</item>
+        <item>com.instagram.android</item>
+    </string-array>
+    <string-array name="other_app_titles">
+        <item>Facebook Messenger</item>
+        <item>Google Messages</item>
+        <item>WhatsApp</item>
+        <item>Instagram</item>
+    </string-array>
+</resources>
