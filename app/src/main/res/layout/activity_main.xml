@@ -3,10 +3,10 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    android:paddingBottom="@dimen/activity_vertical_margin"
     android:paddingLeft="@dimen/activity_horizontal_margin"
-    android:paddingRight="@dimen/activity_horizontal_margin"
     android:paddingTop="@dimen/activity_vertical_margin"
+    android:paddingRight="@dimen/activity_horizontal_margin"
+    android:paddingBottom="@dimen/activity_vertical_margin"
     tools:context="com.jonathanmackenzie.sms_morse.MainActivity">
 
     <EditText
@@ -17,10 +17,24 @@
 
     <Button
         android:id="@+id/talk"
+        style="@style/Widget.AppCompat.Button.Colored"
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
-        style="@style/Widget.AppCompat.Button.Colored"
         android:text="@string/morse_code" />
+
+    <Button
+        android:id="@+id/talkNotify"
+        style="@style/Widget.AppCompat.Button.Colored"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/morse_code_notify" />
+
+    <TextView
+        android:id="@+id/help"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:text="If notification sounds don't play, tap the dots at top right, click Notification Settings and toggle SMSMorse off then on again"
+        android:textSize="10sp" />
 
     <ScrollView
         android:layout_width="fill_parent"

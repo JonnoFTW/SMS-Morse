@@ -2,26 +2,20 @@ package com.jonathanmackenzie.sms_morse;
 
 import android.annotation.SuppressLint;
 import android.annotation.TargetApi;
-import android.app.ActivityManager;
 import android.app.Notification;
-import android.content.BroadcastReceiver;
 import android.content.ComponentName;
-import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
-import android.content.pm.PackageManager;
+import android.os.Build;
 import android.os.Bundle;
-import android.os.IBinder;
 import android.preference.PreferenceManager;
 import android.provider.Settings;
 import android.provider.Telephony;
 import android.service.notification.NotificationListenerService;
 import android.service.notification.StatusBarNotification;
-import android.telephony.SmsMessage;
 import android.util.Log;
 
 import java.util.HashSet;
-import java.util.List;
 import java.util.Set;
 
 /**
@@ -77,6 +71,7 @@ public class SMSMorse extends NotificationListenerService {
         if (settings.getBoolean("play_on_sms", true)) {
             String pkg_name = sbn.getPackageName();
             Set<String> otherApps = settings.getStringSet("other_apps", new HashSet<String>());
+            otherApps.add(this.getPackageName());
             if (otherApps.contains(pkg_name) || pkg_name.equals(Telephony.Sms.getDefaultSmsPackage(this))) {
                 if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.KITKAT) {
                     String sender, message;
@@ -84,17 +79,21 @@ public class SMSMorse extends NotificationListenerService {
                         Bundle b = sbn.getNotification().extras;
                         sender = b.getCharSequence(Notification.EXTRA_TITLE).toString();
                         message = b.getCharSequence(Notification.EXTRA_TEXT).toString();
-                        int length = Integer.parseInt(settings.getString("play_limit", "4"));
-                        if (settings.getBoolean("play_sender", false)) {
-                            StringBuilder sb = new StringBuilder();
-                            for (char c : sender.toLowerCase().toCharArray()) {
-                                if (SMSTone.morseTable.get(c, null) != null) {
-                                    sb.append(c);
-                                }
-                            }
-                            sender = sb.toString();
-                            message = sender;
+                        Log.d(TAG, "Sender: "+sender);
+                        Log.d(TAG, "Message: "+message);
+
+                        if(!settings.contains("play_limit")) {
+                            settings.edit().putInt("play_limit", 4).commit();
                         }
+                        int length = settings.getInt("play_limit", 4);
+                        Log.d(TAG, "play_limit "+ length);
+                        StringBuilder sb = new StringBuilder();
+                        if (settings.getBoolean("play_sender", false)) {
+                            sb.append(sender);
+                            sb.append(" ");
+                        }
+                        sb.append(message);
+                        message = sb.toString();
                         message = message.substring(0, Math.min(message.length(), length));
                         if (message != null) {
                             Log.i(TAG, "Playing message: " + message);
@@ -109,6 +108,7 @@ public class SMSMorse extends NotificationListenerService {
                         }
                     } catch (NullPointerException npe) {
                         // lol
+                        Log.e(TAG, npe.getMessage());
                     }
                 }
             }
@@ -132,6 +132,10 @@ public class SMSMorse extends NotificationListenerService {
     public void onListenerDisconnected() {
         super.onListenerDisconnected();
         Log.d(TAG, "onListenerDisconnected()");
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
+            // Notification listener disconnected - requesting rebind
+            requestRebind(new ComponentName(this, NotificationListenerService.class));
+        }
     }
 
 

@@ -15,11 +15,11 @@
         android:title="@string/pref_use_sender_last" />
     <com.jonathanmackenzie.sms_morse.NumberPickerPreference
         android:defaultValue="4"
-        android:key="play_length"
+        android:key="play_limit"
         android:title="@string/pref_message_length" />
     <MultiSelectListPreference
         android:defaultValue="@array/empty_array"
-        android:dialogTitle="Other Apps"
+        android:dialogTitle="Notification Apps"
         android:entries="@array/other_app_titles"
         android:entryValues="@array/other_app_values"
         android:key="other_apps"

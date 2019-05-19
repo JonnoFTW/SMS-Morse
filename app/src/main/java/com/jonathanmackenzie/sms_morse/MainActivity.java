@@ -2,16 +2,21 @@ package com.jonathanmackenzie.sms_morse;
 
 import android.app.Activity;
 import android.app.AlertDialog;
+import android.app.Notification;
+import android.app.NotificationChannel;
+import android.app.NotificationManager;
 import android.content.ComponentName;
+import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.graphics.Typeface;
 import android.net.Uri;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
 import android.provider.Settings;
+import android.support.v4.app.NotificationCompat;
 import android.text.TextUtils;
-import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -40,13 +45,13 @@ public class MainActivity extends Activity {
         PreferenceManager.setDefaultValues(this, R.xml.pref_general, false);
         setContentView(R.layout.activity_main);
         Button btn = (Button) findViewById(R.id.talk);
-        btn.setText("Morse");
+        Button btnNotify = (Button) findViewById(R.id.talkNotify);
 
         final EditText et = (EditText) findViewById(R.id.input);
         final TextView tv = (TextView) findViewById(R.id.morse);
         tv.setTextSize(32);
         tv.setTypeface(Typeface.createFromAsset(getAssets(), "DroidSansMono.ttf"));
-
+        final Context mContext = this;
 
         /**
          * Play the inputted text
@@ -78,6 +83,40 @@ public class MainActivity extends Activity {
                 })).start();
             }
         });
+        btnNotify.setOnClickListener(new OnClickListener() {
+
+            @Override
+            public void onClick(View v) {
+                (new Thread(new Runnable() {
+
+                    @Override
+                    public void run() {
+                        String message = et.getEditableText().toString();
+                        // Create a new notification
+                        final String channel_id = "SMS_CHANNEL_ID";
+                        NotificationManager notificationManager = (NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE);
+                        if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.O) {
+                            NotificationChannel channel = new NotificationChannel(channel_id,
+                                    "YOUR_CHANNEL_NAME",
+                                    NotificationManager.IMPORTANCE_DEFAULT);
+                            channel.setDescription("YOUR_NOTIFICATION_CHANNEL_DISCRIPTION");
+                            notificationManager.createNotificationChannel(channel);
+                        }
+                        Notification notification = new NotificationCompat.Builder(mContext, channel_id)
+                                .setSmallIcon(R.drawable.ic_stat_name)
+                                .setContentTitle("SMS-Morse")
+                                .setContentText(message)
+                                .setSubText(mTone.convertToDots(message))
+                                .setPriority(NotificationCompat.PRIORITY_DEFAULT).build();
+
+                        notificationManager.notify(0, notification);
+
+                    }
+                })).start();
+            }
+        });
+
+
         if (!isNotificationServiceEnabled()) {
             enableNotificationListenerAlertDialog = buildNotificationServiceAlertDialog();
             enableNotificationListenerAlertDialog.show();

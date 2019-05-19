@@ -16,5 +16,6 @@
     <string name="yes">Yes</string>
     <string name="no">No</string>
     <string name="other_apps_title">Notify for Apps</string>
+    <string name="morse_code_notify">Play as Notification</string>
     <string-array name="empty_array"/>
 </resources>
